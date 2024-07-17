@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bees_ml_path_challenge-skeleton_package',
-    version='0.1.0',
+    version='0.1.1',
     packages=find_packages(),
     install_requires=[
         'pytest',
