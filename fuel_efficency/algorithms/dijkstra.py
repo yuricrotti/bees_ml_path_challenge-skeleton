@@ -27,7 +27,7 @@ class DijkstraStrategy(PathfindingStrategy):
             if current == end:
                 return DijkstraStrategy.reconstruct_path(came_from, start, end)
 
-            # Get the neighbors of the current node
+            # Get the neighbors of the current node and iterate through them
             for neighbor in DijkstraStrategy.get_neighbors(grid, current):
                 # Calculate the new cost to reach the neighbor
                 new_cost = cost_so_far[current] + DijkstraStrategy.calculate_distance(current, neighbor)
