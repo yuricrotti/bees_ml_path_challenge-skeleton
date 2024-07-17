@@ -37,51 +37,54 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
-  
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-  
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.10.4
-  
+
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
           pip install setuptools wheel
-  
+
       - name: Build package
         run: |
           python setup.py sdist bdist_wheel
-          
+
       - name: List dist files
         run: |
-          ls -la 
+          ls -la dist/
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.4
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: 3.10.4
+      - name: Install twine
+        run: |
+          python -m pip install --upgrade pip
+          pip install twine
 
-  #     - name: Install twine
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip install twine
+      - name: List dist files (again)
+        run: |
+          ls -la dist/
 
-  #     - name: Upload to PyPI
-  #       env:
-  #         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-  #         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-  #       run: |
-  #         twine upload dist/*
+      - name: Upload to PyPI
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          twine upload dist/
