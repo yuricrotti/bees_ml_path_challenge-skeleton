@@ -92,8 +92,8 @@ jobs:
           
       - name: Print environment variables
         run: |
-          echo "TWINE_USERNAME is set to $TWINE_USERNAME"
-          echo "TWINE_PASSWORD is set to [REDACTED]"
+          echo "TWINE_USERNAME is set to  ${{ secrets.PYPI_USERNAME }}
+          echo "TWINE_PASSWORD is set to  ${{ secrets.PYPI_PASSWORD }}
           
       - name: List dist files (again)
         run: |
