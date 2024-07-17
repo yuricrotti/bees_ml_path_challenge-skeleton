@@ -80,6 +80,10 @@ jobs:
           name: dist-files
           path: dist/
 
+      - name: List dist files (after download)
+        run: |
+          ls -la dist/
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -90,10 +94,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install twine
           
-      - name: List dist files (again)
-        run: |
-          ls -la dist/
-
       - name: Upload to PyPI
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
@@ -109,6 +109,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Download dist artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist-files
+          path: dist/
+
+      - name: List dist files (after download)
+        run: |
+          ls -la dist/
+
       - name: Create artifact
         run: |
           mkdir -p artifacts
@@ -119,3 +129,4 @@ jobs:
         with:
           name: python-package
           path: artifacts/
+
