@@ -5,7 +5,6 @@ from fuel_efficency.entities.position import Position
 
 
 @dataclass(slots=True)
-@dataclass(slots=True)
 class Plateau(Node):
     weight: float = float(1)
     position: 'Position' = Position()
